@@ -1,8 +1,5 @@
-
 const esbuild = require('esbuild');
-
 const isWatch = process.argv.includes('--watch');
-
 const config = {
     entryPoints: ['./assets/js/main.js'],
     bundle: true,
@@ -15,7 +12,6 @@ const config = {
     logLevel: 'info',
     pure: ['console.log', 'console.debug'],
 };
-
 async function build() {
     if (isWatch) {
         const context = await esbuild.context(config);
@@ -24,5 +20,4 @@ async function build() {
         await esbuild.build(config);
     }
 }
-
 build().catch(() => process.exit(1));

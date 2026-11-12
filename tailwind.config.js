@@ -1,4 +1,3 @@
-
 module.exports = {
     theme: {
         extend: {
@@ -11,27 +10,16 @@ module.exports = {
                 'kp-darkest-blue': '#000d2d',
                 'kp-orange': '#fd6a4f',
                 'kp-gray': '#cccccc',
-
-                // Dark theme surfaces
                 'kp-background': '#080f1e',
                 'kp-surface': '#111d30',
                 'kp-surface-raised': '#17283e',
                 'kp-border': '#294158',
-
-                // Typography
                 'kp-text': '#f1f5f9',
                 'kp-muted': '#a9b9ca',
             },
             fontFamily: {
-                sans: [
-                    'Inter',
-                    'system-ui',
-                    'sans-serif',
-                ],
-                mono: [
-                    'Source Code Pro',
-                    'monospace',
-                ],
+                sans: ['Inter', 'system-ui', 'sans-serif'],
+                mono: ['Source Code Pro', 'monospace'],
             },
             boxShadow: {
                 'kp-card': '0 8px 24px rgba(0, 0, 0, 0.18)',
