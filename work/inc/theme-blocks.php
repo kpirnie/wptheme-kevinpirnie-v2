@@ -48,6 +48,9 @@ if (! class_exists('KPT_Blocks')) {
             // register the portfolio block
             add_action('init', array($this, 'register_portfolio_block'));
 
+            // register the contact form block
+            add_action('init', array($this, 'register_contact_form_block'));
+
         }
 
         /**
@@ -290,6 +293,101 @@ if (! class_exists('KPT_Blocks')) {
             return ob_get_clean();
 
         }
+
+        /**
+         * register_contact_form_block
+         *
+         * Register the contact form Gutenberg block.
+         *
+         * @since 1.0.0
+         * @access public
+         * @return void
+         */
+        public function register_contact_form_block(): void
+        {
+
+            // make sure Gutenberg is available
+            if (! function_exists('register_block_type')) {
+                return;
+            }
+
+            // register the editor JavaScript when available
+            $file = 'assets/js/blocks/contact-form-block.js';
+            $path = KPT_PATH . $file;
+
+            if (file_exists($path)) {
+
+                wp_register_script(
+                    'kpt-contact-form-block-editor',
+                    get_template_directory_uri() . '/' . $file,
+                    array(
+                        'wp-blocks',
+                        'wp-element',
+                        'wp-block-editor',
+                        'wp-components',
+                        'wp-server-side-render',
+                    ),
+                    filemtime($path),
+                    true
+                );
+
+            }
+
+            // register the contact form block
+            register_block_type('kpt/contact-form-block', array(
+                'api_version' => 2,
+                'title' => __('Contact Form', 'kevinpirnie-v2'),
+                'description' => __('Display the website contact form.', 'kevinpirnie-v2'),
+                'category' => 'kpt-blocks',
+                'icon' => 'email',
+                'keywords' => array(
+                    'contact',
+                    'form',
+                    'email',
+                ),
+                'supports' => array(
+                    'anchor' => true,
+                    'align' => array('wide', 'full'),
+                ),
+                'editor_script' => file_exists($path) ? 'kpt-contact-form-block-editor' : null,
+                'render_callback' => array($this, 'render_contact_form_block'),
+            ));
+
+        }
+
+        /**
+         * render_contact_form_block
+         *
+         * Render the contact form.
+         *
+         * @since 1.0.0
+         * @access public
+         * @return string
+         */
+        public function render_contact_form_block($attributes): string
+        {
+
+            // don't render an interactive form inside the editor preview
+            if (
+                defined('REST_REQUEST') &&
+                REST_REQUEST &&
+                is_admin()
+            ) {
+                return '<p>' . esc_html__(
+                    'Contact form preview is available on the frontend.',
+                    'kevinpirnie-v2'
+                ) . '</p>';
+            }
+
+            // render the contact form template
+            ob_start();
+
+            get_template_part('partials/contact');
+
+            return ob_get_clean();
+
+        }
+
 
     }
 
