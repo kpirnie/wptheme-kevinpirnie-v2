@@ -1,0 +1,130 @@
+
+/* Tailwind CSS */
+@import "tailwindcss";
+
+/* Theme Configuration */
+@config "../../tailwind.config.js";
+
+/* WordPress Theme Sources */
+@source "../../*.php";
+@source "../../partials";
+@source "../../work";
+
+/* Base Styles */
+@layer base {
+    :root {
+        color-scheme: dark;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 6rem;
+    }
+
+    body {
+        @apply bg-kp-background text-kp-text font-sans antialiased;
+    }
+
+    ::selection {
+        @apply bg-kp-light-blue text-kp-background;
+    }
+
+    a {
+        @apply transition-colors duration-200;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+        font: inherit;
+    }
+
+    :focus-visible {
+        outline: 2px solid #599bb8;
+        outline-offset: 3px;
+    }
+}
+
+/* Components */
+@layer components {
+
+    /* Layout */
+    .kp-container {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    }
+
+    /* Buttons */
+    .kp-btn {
+        @apply inline-flex items-center justify-center gap-2
+               rounded-lg px-6 py-3 font-semibold
+               transition-colors duration-200;
+    }
+
+    .kp-btn-primary {
+        @apply bg-kp-orange text-kp-background
+               hover:bg-orange-300;
+    }
+
+    .kp-btn-secondary {
+        @apply border border-kp-border bg-kp-surface
+               text-kp-text hover:bg-kp-surface-raised;
+    }
+
+    /* Cards */
+    .kp-card {
+        @apply rounded-xl border border-kp-border
+               bg-kp-surface p-6 shadow-kp-card;
+    }
+
+    /* Glassmorphism */
+    .kp-glass {
+        @apply border border-white/10
+               bg-kp-surface/80
+               backdrop-blur-md;
+    }
+
+    /* Sticky Header */
+    .kp-header {
+        @apply sticky top-0 z-50
+               border-b border-white/10
+               bg-kp-background/90
+               shadow-kp-header
+               backdrop-blur-md;
+    }
+
+    /* Section Headings */
+    .kp-section-title {
+        @apply text-3xl font-bold tracking-tight
+               text-kp-text md:text-4xl;
+    }
+
+    .kp-section-description {
+        @apply mt-4 text-lg leading-relaxed text-kp-muted;
+    }
+
+    /* Hero Overlays */
+    .kp-hero-overlay {
+        background: linear-gradient(
+            90deg,
+            rgba(8, 15, 30, 0.95) 0%,
+            rgba(8, 15, 30, 0.75) 55%,
+            rgba(8, 15, 30, 0.35) 100%
+        );
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
