@@ -288,16 +288,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // update Google Consent Mode
             window.dataLayer = window.dataLayer || [];
 
-            window.dataLayer.push([
-                'consent',
-                'update',
-                {
+            if (typeof window.gtag === 'function') {
+
+                window.gtag('consent', 'update', {
                     ad_storage: state,
                     ad_user_data: state,
                     ad_personalization: state,
                     analytics_storage: state,
-                },
-            ]);
+                });
+
+            }
 
             // reload to apply the preference to server-rendered integrations
             window.location.reload();
