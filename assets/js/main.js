@@ -164,4 +164,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    // Header search
+    const searchToggle = document.getElementById('header-search-toggle');
+    const headerSearch = document.getElementById('header-search');
+    const searchInput = document.getElementById('header-search-input');
+
+    if (searchToggle && headerSearch && searchInput) {
+
+        // toggle the search interface
+        const toggleSearch = (open) => {
+
+            searchToggle.setAttribute('aria-expanded', String(open));
+            headerSearch.hidden = !open;
+            headerSearch.classList.toggle('hidden', !open);
+
+            if (open) {
+                searchInput.focus();
+            } else if (headerSearch.contains(document.activeElement)) {
+                searchToggle.focus();
+            }
+
+        };
+
+        // handle search toggle clicks
+        searchToggle.addEventListener('click', () => {
+
+            const isOpen = searchToggle.getAttribute('aria-expanded') === 'true';
+
+            toggleSearch(!isOpen);
+
+        });
+
+        // close the search interface with Escape
+        document.addEventListener('keydown', (event) => {
+
+            if (event.key === 'Escape' && !headerSearch.hidden) {
+
+                toggleSearch(false);
+                searchToggle.focus();
+
+            }
+
+        });
+
+        // close when clicking outside the search interface
+        document.addEventListener('click', (event) => {
+
+            if (
+                !headerSearch.hidden &&
+                !headerSearch.contains(event.target) &&
+                !searchToggle.contains(event.target)
+            ) {
+                toggleSearch(false);
+            }
+
+        });
+
+    }
+
 });
