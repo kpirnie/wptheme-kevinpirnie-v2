@@ -109,6 +109,7 @@ if (! class_exists('KPT_Blocks')) {
                         'wp-element',
                         'wp-block-editor',
                         'wp-components',
+                        'wp-data',
                         'wp-server-side-render',
                     ),
                     filemtime($path),
