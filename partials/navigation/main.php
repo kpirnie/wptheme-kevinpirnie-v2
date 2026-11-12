@@ -69,6 +69,31 @@ $logo_url = $uploads['baseurl'] . '/2025/10/kevinpirnie-logo-color.svg';
 
             </nav>
 
+            <!-- Search Toggle -->
+            <button
+                id="header-search-toggle"
+                type="button"
+                class="inline-flex h-11 w-11 shrink-0 items-center justify-center
+                       rounded-lg text-kp-muted transition-colors
+                       hover:bg-kp-surface-raised hover:text-kp-text"
+                aria-label="<?php esc_attr_e('Toggle search', 'kevinpirnie-v2'); ?>"
+                aria-controls="header-search"
+                aria-expanded="false"
+            >
+                <svg
+                    class="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.75"
+                    aria-hidden="true"
+                >
+                    <circle cx="10.75" cy="10.75" r="6.75" />
+                    <path stroke-linecap="round" d="m16 16 5 5" />
+                </svg>
+            </button>
+
             <!-- Mobile Menu Toggle -->
             <button
                 id="mobile-menu-toggle"
@@ -100,6 +125,48 @@ $logo_url = $uploads['baseurl'] . '/2025/10/kevinpirnie-logo-color.svg';
                 </svg>
 
             </button>
+
+        </div>
+
+    </div>
+
+    <!-- Header Search -->
+    <div
+        id="header-search"
+        class="hidden border-t border-kp-border bg-kp-background/95 backdrop-blur-md"
+        hidden
+    >
+
+        <div class="kp-container py-5">
+
+            <form
+                role="search"
+                method="get"
+                action="<?php echo esc_url(home_url('/')); ?>"
+                class="mx-auto flex max-w-3xl gap-3"
+            >
+
+                <label for="header-search-input" class="sr-only">
+                    <?php esc_html_e('Search the website', 'kevinpirnie-v2'); ?>
+                </label>
+
+                <input
+                    id="header-search-input"
+                    type="search"
+                    name="s"
+                    value="<?php echo esc_attr(get_search_query()); ?>"
+                    placeholder="<?php esc_attr_e('Search articles, projects, and more...', 'kevinpirnie-v2'); ?>"
+                    class="min-w-0 flex-1 rounded-lg border border-kp-border
+                           bg-kp-surface px-4 py-3 text-kp-text
+                           placeholder:text-kp-muted
+                           focus:border-kp-light-blue focus:outline-none"
+                >
+
+                <button type="submit" class="kp-btn kp-btn-primary">
+                    <?php esc_html_e('Search', 'kevinpirnie-v2'); ?>
+                </button>
+
+            </form>
 
         </div>
 
