@@ -117,6 +117,38 @@ defined('ABSPATH') || die('No direct script access allowed');
 
     </footer>
 
+    <!-- Scroll to Top -->
+    <button
+        id="scroll-to-top"
+        type="button"
+        class="pointer-events-none fixed bottom-6 right-6 z-40
+               flex h-12 w-12 translate-y-4 items-center justify-center
+               rounded-lg border border-kp-border
+               bg-kp-surface/90 text-kp-text
+               opacity-0 shadow-kp-card backdrop-blur-md
+               transition-all duration-200
+               hover:border-kp-light-blue hover:text-kp-light-blue
+               focus-visible:opacity-100
+               md:bottom-8 md:right-8"
+        aria-label="<?php esc_attr_e('Scroll to top', 'kevinpirnie-v2'); ?>"
+        aria-hidden="true"
+        tabindex="-1"
+    >
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+        >
+            <path d="m6 15 6-6 6 6" />
+        </svg>
+    </button>
+
     <?php wp_footer(); ?>
 
 </body>
