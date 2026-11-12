@@ -386,6 +386,55 @@
         @apply mb-0;
     }
 
+
+    /* WordPress Pagination */
+    .navigation.pagination {
+        @apply w-full;
+    }
+
+    .navigation.pagination .nav-links {
+        @apply flex flex-wrap items-center justify-center gap-2;
+    }
+
+    .navigation.pagination .page-numbers {
+        @apply inline-flex h-11 min-w-11 items-center justify-center
+               rounded-lg border border-kp-border
+               bg-kp-surface px-3
+               text-sm font-semibold text-kp-muted
+               transition-colors duration-200;
+    }
+
+    .navigation.pagination a.page-numbers:hover {
+        @apply border-kp-light-blue bg-kp-surface-raised
+               text-kp-text;
+    }
+
+    .navigation.pagination .page-numbers.current {
+        @apply border-kp-orange bg-kp-orange
+               text-kp-background;
+    }
+
+    .navigation.pagination .page-numbers.dots {
+        @apply border-transparent bg-transparent;
+    }
+
+    .navigation.pagination .page-numbers:focus-visible {
+        @apply outline-2 outline-offset-2
+               outline-kp-light-blue;
+    }
+
+    /* Mobile Pagination */
+    @media (max-width: 640px) {
+        .navigation.pagination .nav-links {
+            @apply gap-1.5;
+        }
+
+        .navigation.pagination .page-numbers {
+            @apply h-10 min-w-10 px-2;
+        }
+    }
+
+
 }
 
 /* Accessibility */
