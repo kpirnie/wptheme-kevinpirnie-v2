@@ -58,4 +58,110 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    // Homepage hero carousel
+    const heroCarousel = document.getElementById('hero-carousel');
+
+    if (heroCarousel) {
+
+        const slides = Array.from(heroCarousel.querySelectorAll('.kp-hero-slide'));
+        const prevButton = document.getElementById('hero-prev');
+        const nextButton = document.getElementById('hero-next');
+
+        if (slides.length > 1) {
+
+            let currentSlide = 0;
+            let isPaused = false;
+
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+            // show the requested slide
+            const showSlide = (index) => {
+
+                const nextSlide = (index + slides.length) % slides.length;
+
+                slides.forEach((slide, slideIndex) => {
+
+                    const active = slideIndex === nextSlide;
+
+                    slide.hidden = !active;
+                    slide.classList.toggle('hidden', !active);
+
+                });
+
+                currentSlide = nextSlide;
+
+            };
+
+            // display the next slide
+            const nextSlide = () => {
+                showSlide(currentSlide + 1);
+            };
+
+            // display the previous slide
+            const prevSlide = () => {
+                showSlide(currentSlide - 1);
+            };
+
+            // handle navigation buttons
+            prevButton?.addEventListener('click', prevSlide);
+            nextButton?.addEventListener('click', nextSlide);
+
+            // pause automatic rotation on interaction
+            heroCarousel.addEventListener('mouseenter', () => {
+                isPaused = true;
+            });
+
+            heroCarousel.addEventListener('mouseleave', () => {
+                isPaused = false;
+            });
+
+            heroCarousel.addEventListener('focusin', () => {
+                isPaused = true;
+            });
+
+            heroCarousel.addEventListener('focusout', (event) => {
+
+                if (! heroCarousel.contains(event.relatedTarget)) {
+                    isPaused = false;
+                }
+
+            });
+
+            // allow keyboard navigation
+            heroCarousel.addEventListener('keydown', (event) => {
+
+                if (event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    prevSlide();
+                }
+
+                if (event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    nextSlide();
+                }
+
+            });
+
+            // initialize the carousel
+            showSlide(0);
+
+            // automatically rotate slides
+            window.setInterval(() => {
+
+                if (
+                    isPaused ||
+                    reducedMotion.matches ||
+                    document.hidden
+                ) {
+                    return;
+                }
+
+                nextSlide();
+
+            }, 7000);
+
+        }
+
+    }
+
 });
