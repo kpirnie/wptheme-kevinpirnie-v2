@@ -1,0 +1,34 @@
+
+{
+    "name": "kevinpirnie/wptheme-kevinpirnie-v2",
+    "description": "Kevin Pirnie V2 WordPress Theme",
+    "version": "1.0.0",
+    "type": "project",
+    "homepage": "https://kevinpirnie.com/",
+    "license": "MIT",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Kevin Pirnie",
+            "email": "iam@kevinpirnie.com",
+            "homepage": "https://kevinpirnie.com/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.4",
+        "kevinpirnie/kpt-wpfieldframework": "^1.0"
+    },
+    "autoload": {
+        "classmap": [
+            "work/inc/"
+        ],
+        "files": [
+            "work/kpt.php"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}
