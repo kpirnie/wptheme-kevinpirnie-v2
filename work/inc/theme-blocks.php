@@ -45,6 +45,9 @@ if (! class_exists('KPT_Blocks')) {
             // register our blocks
             add_action('init', array($this, 'register_cta_block'));
 
+            // register the portfolio block
+            add_action('init', array($this, 'register_portfolio_block'));
+
         }
 
         /**
@@ -172,6 +175,116 @@ if (! class_exists('KPT_Blocks')) {
                 'partials/cpts/cta',
                 null,
                 array('cta_id' => $cta_id)
+            );
+
+            return ob_get_clean();
+
+        }
+
+        /**
+         * register_portfolio_block
+         *
+         * Register the portfolio Gutenberg block.
+         *
+         * @since 1.0.0
+         * @access public
+         * @return void
+         */
+        public function register_portfolio_block(): void
+        {
+
+            // make sure Gutenberg is available
+            if (! function_exists('register_block_type')) {
+                return;
+            }
+
+            // register the editor JavaScript when available
+            $file = 'assets/js/blocks/portfolio-block.js';
+            $path = KPT_PATH . $file;
+
+            if (file_exists($path)) {
+
+                wp_register_script(
+                    'kpt-portfolio-block-editor',
+                    get_template_directory_uri() . '/' . $file,
+                    array(
+                        'wp-blocks',
+                        'wp-element',
+                        'wp-block-editor',
+                        'wp-components',
+                        'wp-server-side-render',
+                    ),
+                    filemtime($path),
+                    true
+                );
+
+            }
+
+            // register the portfolio block
+            register_block_type('kpt/portfolio-block', array(
+                'api_version' => 2,
+                'title' => __('Portfolio Slideshow', 'kevinpirnie-v2'),
+                'description' => __('Display portfolio projects.', 'kevinpirnie-v2'),
+                'category' => 'kpt-blocks',
+                'icon' => 'images-alt2',
+                'keywords' => array(
+                    'portfolio',
+                    'projects',
+                    'slideshow',
+                    'gallery',
+                ),
+                'supports' => array(
+                    'anchor' => true,
+                    'align' => array('wide', 'full'),
+                ),
+                'attributes' => array(
+                    'imageSize' => array(
+                        'type' => 'string',
+                        'default' => 'portfolio',
+                    ),
+                ),
+                'editor_script' => file_exists($path) ? 'kpt-portfolio-block-editor' : null,
+                'render_callback' => array($this, 'render_portfolio_block'),
+            ));
+
+        }
+
+        /**
+         * render_portfolio_block
+         *
+         * Render portfolio projects.
+         *
+         * @since 1.0.0
+         * @access public
+         * @return string
+         */
+        public function render_portfolio_block($attributes): string
+        {
+
+            // get the requested image size
+            $image_size = $attributes['imageSize'] ?? 'portfolio';
+
+            // map legacy image sizes to the new theme
+            $image_sizes = array(
+                'portfolio' => 'kp-portfolio',
+                'portfolio-featured' => 'kp-portfolio',
+                'portfolio-grid' => 'kp-portfolio-card',
+                'kp-portfolio' => 'kp-portfolio',
+                'kp-portfolio-card' => 'kp-portfolio-card',
+            );
+
+            // use a supported image size
+            $image_size = is_string($image_size) && isset($image_sizes[$image_size])
+                ? $image_sizes[$image_size]
+                : 'kp-portfolio';
+
+            // render the portfolio template
+            ob_start();
+
+            get_template_part(
+                'partials/cpts/portfolio',
+                null,
+                array('image_size' => $image_size)
             );
 
             return ob_get_clean();
