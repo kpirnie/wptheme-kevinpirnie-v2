@@ -112,6 +112,106 @@
             rgba(8, 15, 30, 0.35) 100%
         );
     }
+
+
+    /* Desktop Navigation */
+    .kp-desktop-menu {
+        @apply flex items-center gap-7;
+    }
+
+    .kp-desktop-menu li {
+        @apply relative;
+    }
+
+    .kp-desktop-menu > li > a {
+        @apply inline-flex items-center py-7
+               text-sm font-medium text-kp-muted
+               hover:text-kp-text;
+    }
+
+    .kp-desktop-menu .current-menu-item > a,
+    .kp-desktop-menu .current-menu-ancestor > a {
+        @apply text-kp-light-blue;
+    }
+
+    /* Desktop Dropdowns */
+    .kp-desktop-menu .sub-menu {
+        @apply invisible absolute left-0 top-full z-50
+               min-w-56 translate-y-2
+               border border-kp-border
+               bg-kp-surface/95 p-2
+               opacity-0 shadow-kp-card
+               backdrop-blur-md
+               transition-all duration-200;
+    }
+
+    .kp-desktop-menu .sub-menu .sub-menu {
+        @apply left-full top-0;
+    }
+
+    .kp-desktop-menu li:hover > .sub-menu,
+    .kp-desktop-menu li:focus-within > .sub-menu {
+        @apply visible translate-y-0 opacity-100;
+    }
+
+    .kp-desktop-menu .sub-menu a {
+        @apply block rounded-md px-4 py-3
+               text-sm text-kp-muted
+               hover:bg-kp-surface-raised
+               hover:text-kp-text;
+    }
+
+    /* Dropdown Indicators */
+    .kp-desktop-menu .menu-item-has-children > a::after {
+        content: "";
+        @apply ml-2 inline-block h-1.5 w-1.5
+               rotate-45 border-b border-r
+               border-current;
+    }
+
+    .kp-desktop-menu .sub-menu .menu-item-has-children > a::after {
+        @apply -rotate-45;
+    }
+
+    /* Mobile Navigation */
+    .kp-mobile-menu {
+        @apply flex flex-col;
+    }
+
+    .kp-mobile-menu li {
+        @apply border-b border-kp-border/60;
+    }
+
+    .kp-mobile-menu li:last-child {
+        @apply border-b-0;
+    }
+
+    .kp-mobile-menu a {
+        @apply block py-3 text-base font-medium
+               text-kp-muted hover:text-kp-text;
+    }
+
+    .kp-mobile-menu .current-menu-item > a,
+    .kp-mobile-menu .current-menu-ancestor > a {
+        @apply text-kp-light-blue;
+    }
+
+    /* Mobile Submenus */
+    .kp-mobile-menu .sub-menu {
+        @apply mb-2 ml-4 border-l border-kp-border pl-4;
+    }
+
+    .kp-mobile-menu .sub-menu a {
+        @apply py-2 text-sm;
+    }
+
+    /* Navigation Accessibility */
+    .kp-desktop-menu a:focus-visible,
+    .kp-mobile-menu a:focus-visible {
+        @apply rounded-sm outline-2 outline-offset-2
+               outline-kp-light-blue;
+    }
+
 }
 
 /* Accessibility */
