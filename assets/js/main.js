@@ -222,4 +222,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    // Scroll to top
+    const scrollToTop = document.getElementById('scroll-to-top');
+
+    if (scrollToTop) {
+
+        // show the button after scrolling 150px
+        const updateScrollButton = () => {
+
+            const visible = window.scrollY > 150;
+
+            scrollToTop.classList.toggle('opacity-0', !visible);
+            scrollToTop.classList.toggle('translate-y-4', !visible);
+            scrollToTop.classList.toggle('pointer-events-none', !visible);
+
+            scrollToTop.classList.toggle('opacity-100', visible);
+            scrollToTop.classList.toggle('translate-y-0', visible);
+            scrollToTop.classList.toggle('pointer-events-auto', visible);
+
+            scrollToTop.setAttribute('aria-hidden', String(!visible));
+            scrollToTop.tabIndex = visible ? 0 : -1;
+
+        };
+
+        // handle scroll events
+        window.addEventListener('scroll', updateScrollButton, {
+            passive: true,
+        });
+
+        // scroll to the top when clicked
+        scrollToTop.addEventListener('click', () => {
+
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            window.scrollTo({
+                top: 0,
+                behavior: reducedMotion ? 'instant' : 'smooth',
+            });
+
+        });
+
+        // initialize the button state
+        updateScrollButton();
+
+    }
+
 });
