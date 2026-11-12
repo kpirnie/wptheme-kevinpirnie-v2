@@ -22,6 +22,40 @@ defined('ABSPATH') || die('No direct script access allowed');
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Google Consent Mode -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            window.dataLayer.push(arguments);
+        }
+
+        (function () {
+
+            // read the existing consent preference
+            const accepted = /(?:^|;\s*)kp_cookie_consent=accepted(?:;|$)/.test(document.cookie);
+            const state = accepted ? 'granted' : 'denied';
+
+            // establish consent before analytics loads
+            gtag('consent', 'default', {
+                ad_storage: state,
+                ad_user_data: state,
+                ad_personalization: state,
+                analytics_storage: state,
+                functionality_storage: 'granted',
+                security_storage: 'granted',
+                wait_for_update: 500,
+            });
+
+            // restrict third-party sharing when consent is denied
+            if (!accepted) {
+                window.a2a_config = window.a2a_config || {};
+                window.a2a_config.no_3p = 1;
+            }
+
+        })();
+    </script>
+
     <?php wp_head(); ?>
 </head>
 
