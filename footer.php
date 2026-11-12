@@ -117,6 +117,84 @@ defined('ABSPATH') || die('No direct script access allowed');
 
     </footer>
 
+    <?php
+
+    // check the existing cookie consent preference
+    $cookie_consent = isset($_COOKIE['kp_cookie_consent']) && is_string($_COOKIE['kp_cookie_consent'])
+        ? sanitize_text_field(wp_unslash($_COOKIE['kp_cookie_consent']))
+        : '';
+
+    ?>
+
+    <?php if (! in_array($cookie_consent, array('accepted', 'declined'), true)) : ?>
+
+        <!-- Cookie Consent -->
+        <div
+            id="cookie-consent"
+            class="fixed inset-x-0 bottom-0 z-50
+                   border-t border-kp-border
+                   bg-kp-surface/95 shadow-kp-header
+                   backdrop-blur-md"
+            role="region"
+            aria-label="<?php esc_attr_e('Cookie consent', 'kevinpirnie-v2'); ?>"
+        >
+
+            <div class="kp-container py-6">
+
+                <div class="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+
+                    <!-- Consent Information -->
+                    <div class="max-w-3xl">
+
+                        <h2 class="mb-2 text-lg font-bold text-kp-text">
+                            <?php esc_html_e('Your Privacy Matters', 'kevinpirnie-v2'); ?>
+                        </h2>
+
+                        <p class="text-sm leading-7 text-kp-muted">
+                            <?php esc_html_e(
+                                'This website uses cookies and similar technologies to improve your experience and understand website usage. You can accept or decline optional cookies.',
+                                'kevinpirnie-v2'
+                            ); ?>
+
+                            <a
+                                href="<?php echo esc_url(home_url('/about-kevin-pirnie/cookie-policy/')); ?>"
+                                class="ml-1 text-kp-light-blue underline underline-offset-4 hover:text-kp-text"
+                            >
+                                <?php esc_html_e('Cookie Policy', 'kevinpirnie-v2'); ?>
+                            </a>
+                        </p>
+
+                    </div>
+
+                    <!-- Consent Actions -->
+                    <div class="flex w-full shrink-0 flex-wrap gap-3 lg:w-auto">
+
+                        <button
+                            id="cookie-decline"
+                            type="button"
+                            class="kp-btn kp-btn-secondary flex-1 lg:flex-none"
+                        >
+                            <?php esc_html_e('Decline', 'kevinpirnie-v2'); ?>
+                        </button>
+
+                        <button
+                            id="cookie-accept"
+                            type="button"
+                            class="kp-btn kp-btn-primary flex-1 lg:flex-none"
+                        >
+                            <?php esc_html_e('Accept', 'kevinpirnie-v2'); ?>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    <?php endif; ?>
+
     <!-- Scroll to Top -->
     <button
         id="scroll-to-top"
