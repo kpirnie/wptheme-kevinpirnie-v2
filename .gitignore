@@ -37,3 +37,6 @@ assets/js/*.debug.js
 *.tmp
 *.bak
 *.orig
+
+package-lock.json
+composer.lock
