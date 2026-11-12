@@ -267,4 +267,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    // Cookie consent
+    const cookieBanner = document.getElementById('cookie-consent');
+    const cookieAccept = document.getElementById('cookie-accept');
+    const cookieDecline = document.getElementById('cookie-decline');
+
+    if (cookieBanner && cookieAccept && cookieDecline) {
+
+        // save the consent preference
+        const setCookieConsent = (accepted) => {
+
+            const consent = accepted ? 'accepted' : 'declined';
+            const state = accepted ? 'granted' : 'denied';
+
+            // persist the preference for 180 days
+            const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+
+            document.cookie = `kp_cookie_consent=${consent}; Path=/; Max-Age=15552000; SameSite=Lax${secure}`;
+
+            // update Google Consent Mode
+            window.dataLayer = window.dataLayer || [];
+
+            window.dataLayer.push([
+                'consent',
+                'update',
+                {
+                    ad_storage: state,
+                    ad_user_data: state,
+                    ad_personalization: state,
+                    analytics_storage: state,
+                },
+            ]);
+
+            // reload to apply the preference to server-rendered integrations
+            window.location.reload();
+
+        };
+
+        // accept optional cookies
+        cookieAccept.addEventListener('click', () => {
+            setCookieConsent(true);
+        });
+
+        // decline optional cookies
+        cookieDecline.addEventListener('click', () => {
+            setCookieConsent(false);
+        });
+
+    }
+
 });
