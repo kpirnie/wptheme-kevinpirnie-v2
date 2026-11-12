@@ -1,0 +1,39 @@
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Composer
+/vendor/
+auth.json
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Operating system
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build intermediates
+assets/css/*.debug.css
+assets/js/*.debug.js
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
