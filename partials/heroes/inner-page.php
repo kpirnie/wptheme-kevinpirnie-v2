@@ -8,15 +8,21 @@ if ($page_id && (is_page() || is_home())) {
     $hero_ids = get_posts(array(
         'post_type' => 'kpt_hero',
         'post_status' => 'publish',
-        'posts_per_page' => 1,
+        'posts_per_page' => -1,
         'fields' => 'ids',
         'orderby' => array('date' => 'DESC', 'ID' => 'DESC'),
-        'meta_key' => 'hero_page_id',
-        'meta_value' => $page_id,
+        'meta_query' => array(
+            array('key' => 'hero_page_ids', 'compare' => 'EXISTS'),
+        ),
     ));
 
-    if ($hero_ids) {
-        $image_id = get_post_thumbnail_id($hero_ids[0]) ?: $image_id;
+    foreach ($hero_ids as $hero_id) {
+        $assigned_pages = get_post_meta($hero_id, 'hero_page_ids', true);
+
+        if (is_array($assigned_pages) && in_array($page_id, array_map('absint', $assigned_pages), true)) {
+            $image_id = get_post_thumbnail_id($hero_id) ?: $image_id;
+            break;
+        }
     }
 }
 $ancestors = is_page() ? array_reverse(get_post_ancestors($page_id)) : array();

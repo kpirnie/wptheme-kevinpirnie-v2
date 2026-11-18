@@ -19,7 +19,7 @@ if (! class_exists('KPT_Settings')) {
                     array('id' => 'kpt_recaptcha_secret_key', 'type' => 'text', 'label' => 'reCAPTCHA Secret Key'),
                 ))),
             ));
-            $pages = array(0 => '— Select a page —');
+            $pages = array();
             foreach (get_pages() as $page) {
                 $pages[$page->ID] = get_the_title($page);
             }
@@ -27,7 +27,7 @@ if (! class_exists('KPT_Settings')) {
             $fw->addMetaBox(array(
                 'id' => 'kpt_hero_display', 'title' => 'Hero Display', 'post_types' => array('kpt_hero'),
                 'context' => 'side', 'priority' => 'high', 'fields' => array(
-                    array('id' => 'hero_page_id', 'type' => 'select', 'label' => 'Page Assignment', 'options' => $pages),
+                    array('id' => 'hero_page_ids', 'type' => 'checkboxes', 'label' => 'Page Assignment', 'options' => $pages),
                     array('id' => 'hero_on_home', 'type' => 'select', 'label' => 'On Home', 'options' => array(
                         '' => 'Use existing assignment',
                         'yes' => 'Yes',
