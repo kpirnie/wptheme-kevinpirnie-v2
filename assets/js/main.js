@@ -1,5 +1,5 @@
 /** Frontend interactions. */
-document.addEventListener('DOMContentLoaded', () => {
+const init = () => {
     const menuToggle = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-navigation');
     if (menuToggle && mobileMenu) {
@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const state = accepted ? 'granted' : 'denied';
             const secure = window.location.protocol === 'https:' ? '; Secure' : '';
             document.cookie = `kp_cookie_consent=${consent}; Path=/; Max-Age=15552000; SameSite=Lax${secure}`;
+            cookieBanner.hidden = true;
             if (typeof window.gtag === 'function') window.gtag('consent', 'update', {
                 ad_storage: state, ad_user_data: state, ad_personalization: state, analytics_storage: state
             });
@@ -96,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         cookieAccept.addEventListener('click', () => setCookieConsent(true));
         cookieDecline.addEventListener('click', () => setCookieConsent(false));
+        cookieBanner.hidden = /(?:^|;\s*)kp_cookie_consent=(?:accepted|declined)(?:;|$)/.test(document.cookie);
     }
     // Contact form: generate reCAPTCHA on submission and measure elapsed interaction time.
     const contactForm = document.getElementById('kpt-contact-form');
@@ -137,4 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Resume print action.
     document.getElementById('kpt-print-resume')?.addEventListener('click', () => window.print());
 
-});
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+} else {
+    init();
+}
