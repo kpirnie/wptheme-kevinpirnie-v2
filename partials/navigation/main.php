@@ -4,6 +4,7 @@ defined('ABSPATH') || die('No direct script access allowed');
 $logo_url = get_template_directory_uri() . '/assets/kevinpirnie-logo-color.svg';
 ?>
 <header id="main-header" class="kp-header">
+    <?php get_template_part('partials/navigation/top'); ?>
     <div class="kp-container">
         <div class="flex min-h-20 items-center justify-between gap-4">
             <a href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>" class="block shrink-0">
