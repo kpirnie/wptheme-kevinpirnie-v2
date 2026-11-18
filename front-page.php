@@ -20,17 +20,17 @@ $heroes = array_merge($heroes, get_posts(array(
 )));
 ?>
 <section id="home-hero" class="relative overflow-hidden bg-kp-background" aria-label="Introduction">
-<div id="hero-carousel" class="relative min-h-[540px] md:min-h-[640px]" aria-roledescription="carousel">
+<div id="hero-carousel" class="relative" aria-roledescription="carousel">
 <?php if ($heroes) : foreach ($heroes as $index => $hero) : $active = 0 === $index; $image_id = get_post_thumbnail_id($hero->ID); ?>
-<div class="kp-hero-slide absolute inset-0 <?php echo $active ? '' : 'hidden'; ?>" data-slide="<?php echo esc_attr($index); ?>" aria-roledescription="slide" aria-label="<?php echo esc_attr(sprintf('Slide %d of %d', $index + 1, count($heroes))); ?>" <?php echo $active ? '' : 'hidden'; ?>>
+<div class="kp-hero-slide relative <?php echo $active ? '' : 'hidden'; ?>" data-slide="<?php echo esc_attr($index); ?>" aria-roledescription="slide" aria-label="<?php echo esc_attr(sprintf('Slide %d of %d', $index + 1, count($heroes))); ?>" <?php echo $active ? '' : 'hidden'; ?>>
 <?php if ($image_id) : ?><div class="absolute inset-0"><?php echo wp_get_attachment_image($image_id, 'kp-hero', false, array('class' => 'h-full w-full object-cover', 'alt' => '', 'loading' => $active ? 'eager' : 'lazy', 'fetchpriority' => $active ? 'high' : 'auto', 'sizes' => '100vw')); ?></div><?php endif; ?>
 <div class="kp-hero-overlay absolute inset-0"></div>
-<div class="kp-container relative z-10 flex min-h-[540px] items-center py-20 md:min-h-[640px]"><div class="max-w-3xl">
+<div class="kp-container relative z-10 flex min-h-[380px] items-center pb-28 pt-12 md:min-h-[480px] md:pt-16"><div class="max-w-3xl">
 <?php if ($active) : ?><h1 class="mb-6 text-4xl font-bold leading-tight tracking-tight md:text-6xl"><?php echo esc_html($hero->post_title); ?></h1><?php else : ?><h2 class="mb-6 text-4xl font-bold leading-tight tracking-tight md:text-6xl"><?php echo esc_html($hero->post_title); ?></h2><?php endif; ?>
 <div class="kp-prose mb-8 max-w-2xl text-lg text-kp-text/90"><?php echo wp_kses_post(apply_filters('the_content', $hero->post_content)); ?></div>
 <a href="<?php echo esc_url(home_url('/about-kevin-pirnie/lets-talk/')); ?>" class="kp-btn kp-btn-primary">Get in Touch</a></div></div></div>
 <?php endforeach; else : ?>
-<div class="kp-container flex min-h-[540px] items-center py-20 md:min-h-[640px]"><div class="max-w-3xl"><p class="mb-5 font-semibold uppercase tracking-widest text-kp-light-blue">WordPress / DevOps / Hosting</p><h1 class="mb-6 text-4xl font-bold tracking-tight md:text-6xl">Building Better Digital Experiences</h1><p class="mb-8 text-lg leading-8 text-kp-muted">Professional WordPress development, reliable hosting, and DevOps solutions focused on performance, security, and maintainability.</p><a class="kp-btn kp-btn-primary" href="<?php echo esc_url(home_url('/about-kevin-pirnie/lets-talk/')); ?>">Get in Touch</a></div></div>
+<div class="kp-container flex min-h-[380px] items-center py-12 md:min-h-[480px] md:py-16"><div class="max-w-3xl"><p class="mb-5 font-semibold uppercase tracking-widest text-kp-light-blue">WordPress / DevOps / Hosting</p><h1 class="mb-6 text-4xl font-bold tracking-tight md:text-6xl">Building Better Digital Experiences</h1><p class="mb-8 text-lg leading-8 text-kp-muted">Professional WordPress development, reliable hosting, and DevOps solutions focused on performance, security, and maintainability.</p><a class="kp-btn kp-btn-primary" href="<?php echo esc_url(home_url('/about-kevin-pirnie/lets-talk/')); ?>">Get in Touch</a></div></div>
 <?php endif; ?>
 <?php if (count($heroes) > 1) : ?><div class="absolute bottom-8 right-8 z-20 flex gap-3"><button type="button" id="hero-prev" class="kp-btn kp-btn-secondary" aria-label="Previous slide">&larr;</button><button type="button" id="hero-next" class="kp-btn kp-btn-secondary" aria-label="Next slide">&rarr;</button></div><?php endif; ?>
 </div></section>

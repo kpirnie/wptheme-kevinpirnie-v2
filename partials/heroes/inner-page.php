@@ -28,10 +28,10 @@ if ($page_id && (is_page() || is_home())) {
 $ancestors = is_page() ? array_reverse(get_post_ancestors($page_id)) : array();
 $subtitle = get_post_meta($page_id, 'page_secondary_title', true);
 ?>
-<section id="page-hero" class="relative isolate flex min-h-[280px] items-center overflow-hidden bg-kp-surface md:min-h-[380px] lg:min-h-[440px]" aria-labelledby="page-hero-title">
+<section id="page-hero" class="relative isolate flex min-h-[240px] items-center overflow-hidden bg-kp-surface md:min-h-[320px] lg:min-h-[360px]" aria-labelledby="page-hero-title">
     <?php if ($image_id) : ?><div class="absolute inset-0 -z-20"><?php echo wp_get_attachment_image($image_id, 'kp-page-hero', false, array('class' => 'h-full w-full object-cover', 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '100vw')); ?></div><?php endif; ?>
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-kp-background/95 via-kp-background/85 to-kp-background/55" aria-hidden="true"></div>
-    <div class="kp-container py-16 md:py-20">
+    <div class="kp-container py-10 md:py-12">
         <nav class="mb-7" aria-label="Breadcrumb"><ol class="flex flex-wrap items-center gap-2 text-sm text-kp-muted">
             <li><a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-kp-light-blue">Home</a></li>
             <?php foreach ($ancestors as $ancestor_id) : ?><li aria-hidden="true" class="text-kp-orange">/</li><li><a href="<?php echo esc_url(get_permalink($ancestor_id)); ?>" class="hover:text-kp-light-blue"><?php echo esc_html(get_the_title($ancestor_id)); ?></a></li><?php endforeach; ?>
