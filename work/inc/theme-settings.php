@@ -19,15 +19,26 @@ if (! class_exists('KPT_Settings')) {
                     array('id' => 'kpt_recaptcha_secret_key', 'type' => 'text', 'label' => 'reCAPTCHA Secret Key'),
                 ))),
             ));
-            $heroes = array();
-            foreach (get_posts(array('post_type' => 'kpt_hero', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids')) as $id) {
-                $heroes[$id] = get_the_title($id);
+            $pages = array(0 => '— Select a page —');
+            foreach (get_pages() as $page) {
+                $pages[$page->ID] = get_the_title($page);
             }
+
+            $fw->addMetaBox(array(
+                'id' => 'kpt_hero_display', 'title' => 'Hero Display', 'post_types' => array('kpt_hero'),
+                'context' => 'side', 'priority' => 'high', 'fields' => array(
+                    array('id' => 'hero_page_id', 'type' => 'select', 'label' => 'Page Assignment', 'options' => $pages),
+                    array('id' => 'hero_on_home', 'type' => 'select', 'label' => 'On Home', 'options' => array(
+                        '' => 'Use existing assignment',
+                        'yes' => 'Yes',
+                        'no' => 'No',
+                    )),
+                ),
+            ));
             $fw->addMetaBox(array(
                 'id' => 'kpt_hero_settings', 'title' => 'Page Options', 'post_types' => array('page'),
                 'context' => 'side', 'priority' => 'high', 'fields' => array(
                     array('id' => 'page_secondary_title', 'type' => 'text', 'label' => 'Secondary Title'),
-                    array('id' => 'page_assignment', 'type' => 'checkboxes', 'label' => 'Hero Assignment', 'options' => $heroes),
                 ),
             ));
             $fw->addMetaBox(array('id' => 'kpt_portfolio_settings', 'title' => 'Portfolio Options',

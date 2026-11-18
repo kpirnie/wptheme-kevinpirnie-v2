@@ -4,6 +4,21 @@ defined('ABSPATH') || die('No direct script access allowed');
 $page_id = get_queried_object_id();
 $title = is_home() && get_option('page_for_posts') ? get_the_title((int) get_option('page_for_posts')) : (is_singular() ? get_the_title($page_id) : get_the_archive_title());
 $image_id = get_post_thumbnail_id($page_id);
+if ($page_id && (is_page() || is_home())) {
+    $hero_ids = get_posts(array(
+        'post_type' => 'kpt_hero',
+        'post_status' => 'publish',
+        'posts_per_page' => 1,
+        'fields' => 'ids',
+        'orderby' => array('date' => 'DESC', 'ID' => 'DESC'),
+        'meta_key' => 'hero_page_id',
+        'meta_value' => $page_id,
+    ));
+
+    if ($hero_ids) {
+        $image_id = get_post_thumbnail_id($hero_ids[0]) ?: $image_id;
+    }
+}
 $ancestors = is_page() ? array_reverse(get_post_ancestors($page_id)) : array();
 $subtitle = get_post_meta($page_id, 'page_secondary_title', true);
 ?>

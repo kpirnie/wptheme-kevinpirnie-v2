@@ -6,6 +6,18 @@ $page_id = get_queried_object_id();
 $assigned = get_post_meta($page_id, 'page_assignment', true);
 $assigned = is_array($assigned) ? array_filter(array_map('absint', $assigned)) : array();
 $heroes = $assigned ? get_posts(array('post_type' => 'kpt_hero', 'post_status' => 'publish', 'post__in' => $assigned, 'orderby' => 'post__in', 'posts_per_page' => -1)) : array();
+$heroes = array_values(array_filter($heroes, static function (WP_Post $hero): bool {
+    return 'no' !== get_post_meta($hero->ID, 'hero_on_home', true);
+}));
+
+$heroes = array_merge($heroes, get_posts(array(
+    'post_type' => 'kpt_hero',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'post__not_in' => $assigned,
+    'meta_key' => 'hero_on_home',
+    'meta_value' => 'yes',
+)));
 ?>
 <section id="home-hero" class="relative overflow-hidden bg-kp-background" aria-label="Introduction">
 <div id="hero-carousel" class="relative min-h-[540px] md:min-h-[640px]" aria-roledescription="carousel">
